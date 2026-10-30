@@ -40,3 +40,26 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# .NET / ASP.NET Core
+**/bin/
+**/obj/
+**/publish/
+**/TestResults/
+*.user
+*.suo
+*.cache
+
+# Local configuration and secrets
+**/appsettings.Development.json
+**/appsettings.*.local.json
+.env
+.env.*
+!.env.example
+secrets.json
+
+# Logs
+*.log
+
+# OS
+.vscode/.ropeproject
