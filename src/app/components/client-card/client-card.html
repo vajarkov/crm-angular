@@ -1,8 +1,37 @@
 <div class="client-card">
-  <h3>{{ client().name }}</h3>
-  <p>{{ client().phone || 'Телефон не указан' }}</p>
+  @if (editing) {
+    <input
+      type="text"
+      placeholder="Имя клиента"
+      [(ngModel)]="editName"
+    />
 
-  <button (click)="delete.emit(client().id)">
-    Удалить
-  </button>
+    <input
+      type="text"
+      placeholder="Телефон"
+      [(ngModel)]="editPhone"
+    />
+
+    <button
+      (click)="save()"
+      [disabled]="!editName.trim()"
+    >
+      Сохранить
+    </button>
+
+    <button (click)="cancelEditing()">
+      Отмена
+    </button>
+  } @else {
+    <h3>{{ client().name }}</h3>
+    <p>{{ client().phone || 'Телефон не указан' }}</p>
+
+    <button (click)="startEditing()">
+      Редактировать
+    </button>
+
+    <button (click)="delete.emit(client().id)">
+      Удалить
+    </button>
+  }
 </div>

@@ -34,6 +34,7 @@
     <app-client-card
       [client]="client"
       (delete)="deleteClient($event)"
+      (update)="updateClient($event)"
     />
   } @empty {
     @if (!clientsService.loading()) {

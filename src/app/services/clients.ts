@@ -1,6 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject, signal } from '@angular/core';
-import { Client, CreateClientRequest } from '../models/client';
+import {
+  Client,
+  CreateClientRequest,
+  UpdateClientRequest
+} from '../models/client';
 
 @Injectable({
   providedIn: 'root'
@@ -55,6 +59,33 @@ export class Clients {
     });
   }
 
+  update(id: number, name: string, phone: string): void {
+    const request: UpdateClientRequest = {
+      name,
+      phone: phone || null
+    };
+
+    this.error.set(null);
+
+    this.http.put<void>(`${this.apiUrl}/${id}`, request).subscribe({
+      next: () => {
+        this.clients.update(clients =>
+          clients.map(client =>
+            client.id === id
+              ? { ...client, name, phone: phone || null }
+              : client
+          )
+        );
+      },
+      error: err => {
+        console.error('Ошибка обновления клиента:', err);
+        this.error.set(
+          err.error?.title ?? 'Не удалось обновить клиента.'
+        );
+      }
+    });
+  }
+  
   delete(id: number): void {
     this.error.set(null);
 

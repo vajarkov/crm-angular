@@ -32,4 +32,16 @@ export class App {
   protected deleteClient(id: number): void {
     this.clientsService.delete(id);
   }
+
+  protected updateClient(event: {
+    id: number;
+    name: string;
+    phone: string;
+  }): void {
+    this.clientsService.update(
+      event.id,
+      event.name,
+      event.phone
+    );
+  }
 }
