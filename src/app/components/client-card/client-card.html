@@ -1,0 +1,8 @@
+<div class="client-card">
+  <h3>{{ client().name }}</h3>
+  <p>{{ client().phone || 'Телефон не указан' }}</p>
+
+  <button (click)="delete.emit(client().id)">
+    Удалить
+  </button>
+</div>

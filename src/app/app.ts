@@ -1,12 +1,35 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { Clients } from './services/clients';
+import { ClientCard } from './components/client-card/client-card';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [FormsModule, ClientCard],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
 export class App {
-  protected readonly title = signal('crm-angular');
+  protected readonly clientsService = inject(Clients);
+
+  protected newName = '';
+  protected newPhone = '';
+
+  protected addClient(): void {
+    const name = this.newName.trim();
+
+    if (!name) return;
+
+    this.clientsService.add(
+      name,
+      this.newPhone.trim()
+    );
+
+    this.newName = '';
+    this.newPhone = '';
+  }
+
+  protected deleteClient(id: number): void {
+    this.clientsService.delete(id);
+  }
 }
